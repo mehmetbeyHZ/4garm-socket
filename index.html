@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Robo4</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<label>DOWN UP</label>
+<input type="range" style="width: 100%" min="1" max="100" value="0" class="slider" id="downUp">
+<br>
+<label>FORWARD BACKWARD</label>
+<input type="range" style="width: 100%" min="1" max="100" value="0" class="slider" id="forwardBackward">
+<br>
+<label>TURN AROUND</label>
+<input type="range" style="width: 100%" min="1" max="180" value="0" class="slider" id="turnAround">
+
+
+<script>
+    $(function (){
+        const downUp = $("input#downUp");
+        const forwardBackward = $("input#forwardBackward");
+        const turnAround = $("input#turnAround");
+
+        downUp.on('change',function (){
+            handleRequest("DOWNUP",downUp.val())
+        });
+
+        forwardBackward.on('change',function (){
+            handleRequest("FORWARDBACKWARD",forwardBackward.val())
+        })
+
+        turnAround.on('change',function (){
+            handleRequest("TURNAROUND",turnAround.val())
+        })
+
+        function handleRequest(route_name,value)
+        {
+            $.post('/router',{route_name,value},data => {
+                console.log(data);
+            })
+        }
+    })
+</script>
+</body>
+</html>
