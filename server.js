@@ -1,28 +1,22 @@
-var serialport = require('serialport');
-var portName = '/dev/tty.usbserial-110';
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
-const port = 3132
+const express = require('express'),
+    http = require('http'),
+    bodyParser = require('body-parser'),
+    socket = require('socket.io');
 
-// var myPort = new serialport(portName, {
-//     baudRate: 9600,
-//     parser: new serialport.parsers.Readline('\n')
-// });
-//
-//
-// myPort.on('open', onOpen);
-// myPort.on('data', onData);
 
-function onOpen(){
-    console.log('Open connections!');
-}
+const app = express();
+let http_server = http.createServer(app).listen(3132);
 
-function onData(data){
-    console.log('on Data ' + data);
-}
+const io = socket(http_server)
+io.on("connection", socket => {
+    const currentUser = socket.handshake;
+    console.log("a user connected!!");
+    socket.on('disconnect', function (){
+        console.log("a user disconnected!")
+    })
+});
 
-// parse application/x-www-form-urlencoded
+
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
@@ -35,28 +29,6 @@ app.get('/', (req, res) => {
 
 app.post('/router',(req,res) => {
     const {route_name, value} = req.body;
-    myPort.write(route_name+":"+value+"!")
+    io.emit("robotic.data",route_name+":"+value+"!")
     res.send("ok")
 })
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
-
-
-
-
-
-/*
-let i = 0;
-setInterval(function(){
-    myPort.write("DOWNUP:"+i+"!",function (err) {
-        i += 10;
-        if (i > 60)
-        {
-            i = 0;
-        }
-    })
-}, 2000);
-
- */
