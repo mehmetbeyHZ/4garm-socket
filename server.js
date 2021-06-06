@@ -3,16 +3,16 @@ var portName = '/dev/tty.usbserial-110';
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const port = 3000
+const port = 3132
 
-var myPort = new serialport(portName, {
-    baudRate: 9600,
-    parser: new serialport.parsers.Readline('\n')
-});
-
-
-myPort.on('open', onOpen);
-myPort.on('data', onData);
+// var myPort = new serialport(portName, {
+//     baudRate: 9600,
+//     parser: new serialport.parsers.Readline('\n')
+// });
+//
+//
+// myPort.on('open', onOpen);
+// myPort.on('data', onData);
 
 function onOpen(){
     console.log('Open connections!');
