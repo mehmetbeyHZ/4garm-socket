@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RoboNet</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+        a {
+            color: #00B7FF;
+        }
+
+        .shadow {
+            -webkit-box-shadow: 0 1px 15px 1px rgba(81, 77, 92, .08) !important;
+            box-shadow: 0 1px 15px 1px rgba(81, 77, 92, .08) !important;
+        }
+
+        .menu ul {
+            margin-top: 16px
+        }
+
+        .menu ul li a.menu-item {
+            padding: 12px 20px;
+            line-height: 10px;
+            background-color: transparent;
+            color: #6c7293
+        }
+
+        .menu ul li a:hover:not(.active) {
+            background-color: transparent !important;
+            color: #591df1
+        }
+
+        .menu ul li a.active {
+            background-color: #f5f6fc;
+            border-radius: 4px;
+            color: #591df1
+        }
+
+        .menu ul li a.active_black {
+            background-color: #591df1;
+            border-radius: 4px;
+            color: #fff
+        }
+
+        .menu ul li a.active_black:hover {
+            background-color: #591df1a3 !important;
+            border-radius: 4px;
+            color: #fff
+        }
+
+        .menu ul li a:hover {
+            background-color: #f5f6fc
+        }
+    </style>
+</head>
+<body>
+
+
+
+<nav class="menu white shadow">
+    <div class="nav-wrapper container">
+        <a href="#!" class="brand-logo"><img src="https://image.flaticon.com/icons/png/512/3463/3463514.png" alt=""
+                                             width="50px" style="margin-top: 6px"></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a class="menu-item" href="/">Anasayfa</a></li>
+            <li><a class="menu-item" href="/robotic">RoboticARM</a></li>
+            <li><a class="menu-item" href="/serebot">SEREBOT</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<h1 class="center"><span style="color:#fec258;">ROBOTIC 4.5G ARM API</span></h1>
+
+<div class="container">
+    <div class="card shadow">
+        <div class="card-content">
+            <label>Yönetim arayüzü</label>
+            <BR>
+
+
+            <p>MOTOR 1 | <b>YUKARI - AŞAĞI</b></p>
+            <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="downUp">
+            <br>
+            <p>MOTOR 2 | <b>ILERI - GERI</b></p>
+            <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="forwardBackward">
+            <br>
+            <p>MOTOR 2 | <b>ETRAFINDA DÖN</b></p>
+            <input type="range" style="width: 100%; height: auto" min="1" max="180" value="0" class="slider" id="turnAround">
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(function () {
+
+
+        const downUp = $("input#downUp");
+        const forwardBackward = $("input#forwardBackward");
+        const turnAround = $("input#turnAround");
+
+        downUp.on('change', function () {
+            handleRequest("DOWNUP", downUp.val())
+        });
+
+        forwardBackward.on('change', function () {
+            handleRequest("FORWARDBACKWARD", forwardBackward.val())
+        })
+
+        turnAround.on('change', function () {
+            handleRequest("TURNAROUND", turnAround.val())
+        })
+
+
+        function handleRequest(route_name, value) {
+            M.toast({html:"ok"})
+            $.post('/router', {route_name, value}, data => {
+                console.log(data);
+            })
+        }
+    })
+</script>
+</body>
+</html>

@@ -5,50 +5,178 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Robo4</title>
+    <title>RoboNet</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+        a {
+            color: #00B7FF;
+        }
+
+        .shadow {
+            -webkit-box-shadow: 0 1px 15px 1px rgba(81, 77, 92, .08) !important;
+            box-shadow: 0 1px 15px 1px rgba(81, 77, 92, .08) !important;
+        }
+
+        .menu ul {
+            margin-top: 16px
+        }
+
+        .menu ul li a.menu-item {
+            padding: 12px 20px;
+            line-height: 10px;
+            background-color: transparent;
+            color: #6c7293
+        }
+
+        .menu ul li a:hover:not(.active) {
+            background-color: transparent !important;
+            color: #591df1
+        }
+
+        .menu ul li a.active {
+            background-color: #f5f6fc;
+            border-radius: 4px;
+            color: #591df1
+        }
+
+        .menu ul li a.active_black {
+            background-color: #591df1;
+            border-radius: 4px;
+            color: #fff
+        }
+
+        .menu ul li a.active_black:hover {
+            background-color: #591df1a3 !important;
+            border-radius: 4px;
+            color: #fff
+        }
+
+        .menu ul li a:hover {
+            background-color: #f5f6fc
+        }
+    </style>
 </head>
 <body>
-<label>DOWN UP</label>
-<input type="range" style="width: 100%" min="1" max="100" value="0" class="slider" id="downUp">
-<br>
-<label>FORWARD BACKWARD</label>
-<input type="range" style="width: 100%" min="1" max="100" value="0" class="slider" id="forwardBackward">
-<br>
-<label>TURN AROUND</label>
-<input type="range" style="width: 100%" min="1" max="180" value="0" class="slider" id="turnAround">
 
+
+
+<nav class="menu white shadow">
+    <div class="nav-wrapper container">
+        <a href="#!" class="brand-logo"><img src="https://image.flaticon.com/icons/png/512/3463/3463514.png" alt=""
+                                             width="50px" style="margin-top: 6px"></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a class="menu-item" href="/">Anasayfa</a></li>
+            <li><a class="menu-item" href="/robotic">RoboticARM</a></li>
+            <li><a class="menu-item" href="/serebot">SEREBOT</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<h1 class="center"><span style="color:#fec258;">Robo</span>tic Arm On Inter<span style="color:#fec258;">net</span></h1>
+<div class="center" style="width: 650px; margin-left: auto; margin-right: auto">
+    Robotik projelerinizi internet üzerinden yönetin! <br>
+    <label>
+        TKMYO Ege Üniversitesi Bilgisayar Programcılığı öğrencisi <b>Mehmet Emin Karakaş </b> tarafından NodeJS ile geliştirilmiştir.
+        Bütün robotik projelerinize eşzamanı veri transferleri yapabilmek için açık kaynak kodlu şekilde kullanılabilir.
+    </label>
+</div>
+<div class="container">
+    <div class="card shadow">
+        <div class="card-content">
+            <h4>RoboNet Nedir?</h4>
+            <div style="font-size: 16px">
+                Robonet, Socket servisleri ile hedef bilgisayara gerekli verileri gönderen <b>NodeJS</b> tabanlı bir
+                WebSocket
+                servisidir. Gönderilecek komutların hedef cihazda tanımlı olması gerekmektedir. Aynı anda birden fazla
+                komut işleyebilme özelliği ile bir aksiyon hedef bilgisayar tarafından tamamlanmadan ikinci bir aksiyon
+                gönderilebilir veya bu işlemler eşanlı gerçekleştirilebilir.
+            </div>
+            <h4>Robonet Neyi Amaçlar</h4>
+            <p>
+                Robonet, internet erişimi olan her yerden robotik projenin yönetilmesini sağlayan bir servistir. Bu servis;
+                <b>Linux</b>,<b>Windows</b>,<b>MacOS</b> işletim sistemlerinde, Mini bilgisayarlar <b>Telefonlar</b>,<b>RespberryPI</b> cihazlar ile
+                sorunsuz çalışabilir. Uzaktaki cihaz tanımlanmış komutlar ile yönetilebilir.
+            </p>
+            <h4>RoboNet Komutları Nasıl Çalışır?</h4>
+            <div style="font-size: 16px">
+                RoboNet,<b>KEY:VALUE!</b> (Ahantar:Değer!) yapısındaki komutlar ile çalışır her komutun bir önceki komuttan
+                ayrılmasını sağlamak için ! ifadesi kullanılır. Örneğin bir robotik kol yaptığımızı düşünelim ileriye 5
+                derece ve etrafında 10 derecelik bir motor hareketi yapmasını isteyelim. Bu durumda websocket
+                servisimize aşağıdaki parametreyi göndermemiz yeterli olacaktır.
+                <div style="background-color: black; padding: 10px; border-radius: 10px;">
+                    <span class="red-text">FORWARDBACKWARD:5!</span><span class="yellow-text">TURNAROUND:10!</span>
+                </div>
+            </div>
+            <h4>RoboNet Client Nedir?</h4>
+            <div style="font-size: 16px">
+                Robotic Client javascript - nodeJS ile çalışan ana sunucudan gelen verileri cihaza <a href="https://serialport.io/">SerialPort.IO</a> aracılığıyla
+                Arduino cihaza gönderen küçük ve hızlı bir servistir. Bu servisin örnek çalışması GitHub üzerinde açık kaynak kodlu olarak paylaşılmıştır.
+                <br>
+                <a class="btn blue" href="https://gist.github.com/mehmetbeyHZ/2caba2dbaa2f0977cc67f8addd5356e2" target="_blank">Github Client Kodları</a>
+            </div>
+            <h4>RoboNet Listener Nedir?</h4>
+            <div style="font-size: 16px">
+                RoboNet Listener, SerialPort tarafından Arduino cihaza gönderilen verilerin işlenmesini sağlayan Arduino kodlarıdır.
+                <br>
+                <a class="btn blue" href="https://gist.github.com/mehmetbeyHZ/2caba2dbaa2f0977cc67f8addd5356e2" target="_blank">Github Listener Kodları</a>
+            </div>
+
+            <h4 style="margin-top: 50px">Örnek Robotik Kod Diyagramı</h4>
+            <img class="center" src="https://i.hizliresim.com/jt5rjox.jpeg" alt="" style="width: 500px; max-width: 100%">
+
+        </div>
+</div>
+
+
+<!--<label>DOWN UP</label>-->
+<!--<input type="range" style="width: 100%" min="1" max="100" value="0" class="slider" id="downUp">-->
+<!--<br>-->
+<!--<label>FORWARD BACKWARD</label>-->
+<!--<input type="range" style="width: 100%" min="1" max="100" value="0" class="slider" id="forwardBackward">-->
+<!--<br>-->
+<!--<label>TURN AROUND</label>-->
+<!--<input type="range" style="width: 100%" min="1" max="180" value="0" class="slider" id="turnAround">-->
+
+<!--<button id="forward">ILERI</button>-->
+<!--<button id="backward">GERI</button>-->
+<!--<button id="turnRight">SAG</button>-->
+<!--<button id="turnLeft">SOL</button>-->
 
 <script>
-    $(function (){
+    $(function () {
 
 
-        $("body").on('keypress',function(event) {
-            console.log(event.keyCode)
-            if (event.keyCode === 119){
-                handleRequest("DOWNUP","100")
-            }
+        const forward = $("button#forward");
+        const backward = $("button#backward");
+        const turnLeft = $("button#turnLeft");
+        const turnRight = $("button#turnRight");
+
+        forward.on('click', function () {
+            handleRequest("SEREBOT_FORWARD", "100")
         });
 
-        const downUp = $("input#downUp");
-        const forwardBackward = $("input#forwardBackward");
-        const turnAround = $("input#turnAround");
-
-        downUp.on('change',function (){
-            handleRequest("DOWNUP",downUp.val())
-        });
-
-        forwardBackward.on('change',function (){
-            handleRequest("FORWARDBACKWARD",forwardBackward.val())
+        backward.on('click', function () {
+            handleRequest("SEREBOT_BACKWARD", "100")
         })
 
-        turnAround.on('change',function (){
-            handleRequest("TURNAROUND",turnAround.val())
+        turnLeft.on('click', function () {
+            handleRequest("SEREBOT_LEFT", "100")
         })
 
-        function handleRequest(route_name,value)
-        {
-            $.post('/router',{route_name,value},data => {
+        turnRight.on('click', function () {
+            handleRequest("SEREBOT_RIGHT", "100")
+        })
+
+        // turnAround.on('change',function (){
+        //     handleRequest("TURNAROUND",turnAround.val())
+        // })
+
+        function handleRequest(route_name, value) {
+            $.post('/router', {route_name, value}, data => {
                 console.log(data);
             })
         }

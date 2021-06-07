@@ -26,6 +26,15 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname+'/index.html')
 })
 
+app.get('/robotic', (req, res) => {
+    res.sendFile(__dirname+'/robotic.html')
+})
+
+app.get('/serebot', (req, res) => {
+    res.sendFile(__dirname+'/serebot.html')
+})
+
+
 
 app.post('/router',(req,res) => {
     const {route_name, value} = req.body;
