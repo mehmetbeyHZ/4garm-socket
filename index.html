@@ -21,6 +21,15 @@
 
 <script>
     $(function (){
+
+
+        $("body").on('keypress',function(event) {
+            console.log(event.keyCode)
+            if (event.keyCode === 119){
+                handleRequest("DOWNUP","100")
+            }
+        });
+
         const downUp = $("input#downUp");
         const forwardBackward = $("input#forwardBackward");
         const turnAround = $("input#turnAround");
