@@ -79,27 +79,39 @@
 <h1 class="center"><span style="color:#fec258;">ROBOTIC 4.5G ARM API</span></h1>
 
 <div class="container">
-    <div class="card shadow">
-        <div class="card-content">
-            <label>Yönetim arayüzü</label>
-            <BR>
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card shadow">
+                <div class="card-content">
+                    <label>Yönetim arayüzü</label>
+                    <BR>
+                    <label>Aşağıdaki buton ile servo motor konumlarını 0 dereye sıfırlayabilirsiniz.</label><br>
+                    <button class="btn black" id="rest_servos" style="margin-bottom: 22px">SIFIRLA</button>
+                    <p>MOTOR 1 | <b>AŞAĞI - YUKARI</b></p>
+                    <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="downUp">
+                    <br>
+                    <p>MOTOR 2 | <b>ILERI - GERI</b></p>
+                    <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="forwardBackward">
+                    <br>
+                    <p>MOTOR 3 | <b>ETRAFINDA DÖN</b></p>
+                    <input type="range" style="width: 100%; height: auto" min="1" max="180" value="0" class="slider" id="turnAround">
+                    <p>MOTOR 4 | <b>KOLLARI KAPAT</b></p>
+                    <label>
+                        <input name="group1" value="120" type="radio" />
+                        <span>AÇ</span>
+                    </label>
+                    <label>
+                        <input name="group1" value="0" type="radio" />
+                        <span>KAPAT</span>
+                    </label>
 
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6" style="overflow: scroll; height: 300px; background-color: black">
+            <ul id="logs">
 
-            <p>MOTOR 1 | <b>AŞAĞI - YUKARI</b></p>
-            <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="downUp">
-            <br>
-            <p>MOTOR 2 | <b>ILERI - GERI</b></p>
-            <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="forwardBackward">
-            <br>
-            <p>MOTOR 3 | <b>ETRAFINDA DÖN</b></p>
-            <input type="range" style="width: 100%; height: auto" min="1" max="180" value="0" class="slider" id="turnAround">
-            <p>MOTOR 4 | <b>KOLLARI KAPAT - AÇ</b></p>
-            <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="servoArms">
-
-
-
-
-
+            </ul>
         </div>
     </div>
 </div>
@@ -109,11 +121,23 @@
 <script>
     $(function () {
 
+        function appendLogScreen(data){
+            $("ul#logs").prepend(`<li><span style="color: red">KOMUT: </span><span style="color: #fec258">${data}</span></li>`)
+        }
 
+        appendLogScreen("Server Started!")
         const downUp = $("input#downUp");
         const forwardBackward = $("input#forwardBackward");
         const turnAround = $("input#turnAround");
         const servoArms = $("input#servoArms");
+
+        $("button#rest_servos").on('click',function (){
+            handleRequestLong("DOWNUP:0!FORWARDBACKWARD:0!TURNAROUND:!ARMROUTE:0!")
+        })
+
+        $("input[name=group1]").on('change', function (){
+            handleRequest("ARMROUTE",$(this).val())
+        })
 
         downUp.on('change', function () {
             handleRequest("DOWNUP", downUp.val())
@@ -122,6 +146,7 @@
         forwardBackward.on('change', function () {
             handleRequest("FORWARDBACKWARD", forwardBackward.val())
         })
+
 
 
         turnAround.on('change', function () {
@@ -133,8 +158,16 @@
         })
 
         function handleRequest(route_name, value) {
+            appendLogScreen(route_name+":"+value+"!")
             M.toast({html:"ok"})
             $.post('/router', {route_name, value}, data => {
+                console.log(data);
+            })
+        }
+
+        function handleRequestLong(direct_data){
+            appendLogScreen(direct_data)
+            $.post('/router', {direct_data}, data => {
                 console.log(data);
             })
         }

@@ -37,7 +37,11 @@ app.get('/serebot', (req, res) => {
 
 
 app.post('/router',(req,res) => {
-    const {route_name, value} = req.body;
-    io.emit("robotic.data",route_name+":"+value+"!")
+    const {route_name, value,direct_data} = req.body;
+    if (direct_data){
+        io.emit('robotic.data',direct_data)
+    }else{
+        io.emit("robotic.data",route_name+":"+value+"!")
+    }
     res.send("ok")
 })
