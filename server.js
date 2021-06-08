@@ -37,9 +37,9 @@ app.get('/serebot', (req, res) => {
 
 
 app.post('/router',(req,res) => {
-    const {route_name, value,direct_data} = req.body;
-    if (direct_data){
-        io.emit('robotic.data',direct_data)
+    const {route_name, value} = req.body;
+    if (req.body.hasOwnProperty("direct_data")){
+        io.emit('robotic.data',req.body.direct_data)
     }else{
         io.emit("robotic.data",route_name+":"+value+"!")
     }
