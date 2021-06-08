@@ -88,20 +88,20 @@
                     <label>Aşağıdaki buton ile servo motor konumlarını 0 dereye sıfırlayabilirsiniz.</label><br>
                     <button class="btn black" id="rest_servos" style="margin-bottom: 22px">SIFIRLA</button>
                     <p>MOTOR 1 | <b>AŞAĞI - YUKARI</b></p>
-                    <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="downUp">
+                    <input type="range" style="width: 100%; height: auto" min="0" max="100" value="0" class="slider" id="downUp">
                     <br>
                     <p>MOTOR 2 | <b>ILERI - GERI</b></p>
-                    <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="forwardBackward">
+                    <input type="range" style="width: 100%; height: auto" min="0" max="100" value="0" class="slider" id="forwardBackward">
                     <br>
                     <p>MOTOR 3 | <b>ETRAFINDA DÖN</b></p>
-                    <input type="range" style="width: 100%; height: auto" min="1" max="180" value="0" class="slider" id="turnAround">
+                    <input type="range" style="width: 100%; height: auto" min="0" max="180" value="0" class="slider" id="turnAround">
                     <p>MOTOR 4 | <b>KOLLARI KAPAT</b></p>
                     <label>
-                        <input name="group1" value="120" type="radio" />
+                        <input name="group1" class="onOffArmMethod" value="120" type="radio" />
                         <span>AÇ</span>
                     </label>
                     <label>
-                        <input name="group1" value="0" type="radio" />
+                        <input name="group1" class="onOffArmMethod" value="0" type="radio" />
                         <span>KAPAT</span>
                     </label>
 
@@ -132,6 +132,9 @@
         const servoArms = $("input#servoArms");
 
         $("button#rest_servos").on('click',function (){
+            downUp.val(0);
+            forwardBackward.val(0);
+            turnAround.val(0);
             handleRequestLong("DOWNUP:0!FORWARDBACKWARD:0!TURNAROUND:!ARMROUTE:0!")
         })
 
