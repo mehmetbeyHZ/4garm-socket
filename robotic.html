@@ -85,14 +85,17 @@
             <BR>
 
 
-            <p>MOTOR 1 | <b>YUKARI - AŞAĞI</b></p>
+            <p>MOTOR 1 | <b>AŞAĞI - YUKARI</b></p>
             <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="downUp">
             <br>
             <p>MOTOR 2 | <b>ILERI - GERI</b></p>
             <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="forwardBackward">
             <br>
-            <p>MOTOR 2 | <b>ETRAFINDA DÖN</b></p>
+            <p>MOTOR 3 | <b>ETRAFINDA DÖN</b></p>
             <input type="range" style="width: 100%; height: auto" min="1" max="180" value="0" class="slider" id="turnAround">
+            <p>MOTOR 4 | <b>KOLLARI KAPAT - AÇ</b></p>
+            <input type="range" style="width: 100%; height: auto" min="1" max="100" value="0" class="slider" id="servoArms">
+
 
 
 
@@ -110,6 +113,7 @@
         const downUp = $("input#downUp");
         const forwardBackward = $("input#forwardBackward");
         const turnAround = $("input#turnAround");
+        const servoArms = $("input#servoArms");
 
         downUp.on('change', function () {
             handleRequest("DOWNUP", downUp.val())
@@ -119,10 +123,14 @@
             handleRequest("FORWARDBACKWARD", forwardBackward.val())
         })
 
+
         turnAround.on('change', function () {
             handleRequest("TURNAROUND", turnAround.val())
         })
 
+        servoArms.on('change', function () {
+            handleRequest("ARMROUTE", forwardBackward.val())
+        })
 
         function handleRequest(route_name, value) {
             M.toast({html:"ok"})
@@ -130,6 +138,7 @@
                 console.log(data);
             })
         }
+
     })
 </script>
 </body>

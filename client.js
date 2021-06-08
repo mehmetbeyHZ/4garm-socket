@@ -17,6 +17,7 @@ var myPort = new serialport(portName, {
     parser: new serialport.parsers.Readline('\n')
 });
 
+execShellCommand("sudo chmod a+rw "+ portName)
 
 myPort.on('open', onOpen);
 myPort.on('data', onData);
