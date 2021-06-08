@@ -129,7 +129,7 @@
         })
 
         servoArms.on('change', function () {
-            handleRequest("ARMROUTE", forwardBackward.val())
+            handleRequest("ARMROUTE", servoArms.val())
         })
 
         function handleRequest(route_name, value) {
